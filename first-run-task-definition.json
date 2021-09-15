@@ -9,12 +9,12 @@
         "logDriver": "awslogs",
         "secretOptions": null,
         "options": {
-          "awslogs-group": "/ecs/demo-task",
+          "awslogs-group": "/ecs/first-run-task-definition",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
       },
-      "entryPoint": null,
+      "entryPoint": [],
       "portMappings": [
         {
           "hostPort": 8080,
@@ -22,9 +22,9 @@
           "containerPort": 8080
         }
       ],
-      "command": null,
+      "command": [],
       "linuxParameters": null,
-      "cpu": 0,
+      "cpu": 1024,
       "environment": [],
       "resourceRequirements": null,
       "ulimits": null,
@@ -34,10 +34,10 @@
       "secrets": null,
       "dockerSecurityOptions": null,
       "memory": null,
-      "memoryReservation": null,
+      "memoryReservation": 2048,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "049056461694.dkr.ecr.us-east-1.amazonaws.com/demoapp:3118af58bb6cd274a0b350e29c4b4e6c840ee9ea",
+      "image": "tomcat",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -45,7 +45,7 @@
       "interactive": null,
       "healthCheck": null,
       "essential": true,
-      "links": null,
+      "links": [],
       "hostname": null,
       "extraHosts": null,
       "pseudoTerminal": null,
@@ -54,18 +54,18 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "demo-contaiber"
+      "name": "tomcat-webserver"
     }
   ],
   "placementConstraints": [],
-  "memory": "1024",
-  "taskRoleArn": "arn:aws:iam::049056461694:role/ecsTaskExecutionRole",
+  "memory": "2048",
+  "taskRoleArn": null,
   "compatibilities": [
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:049056461694:task-definition/demo-task:1",
-  "family": "demo-task",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:049056461694:task-definition/first-run-task-definition:1",
+  "family": "first-run-task-definition",
   "requiresAttributes": [
     {
       "targetId": null,
@@ -83,25 +83,13 @@
       "targetId": null,
       "targetType": null,
       "value": null,
-      "name": "com.amazonaws.ecs.capability.ecr-auth"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
     },
     {
       "targetId": null,
       "targetType": null,
       "value": null,
-      "name": "com.amazonaws.ecs.capability.task-iam-role"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.execution-role-ecr-pull"
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
     },
     {
       "targetId": null,
@@ -121,7 +109,7 @@
     "FARGATE"
   ],
   "networkMode": "awsvpc",
-  "cpu": "512",
+  "cpu": "1024",
   "revision": 1,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
