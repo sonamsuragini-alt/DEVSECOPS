@@ -52,10 +52,7 @@ jobs:
       - name: Upload Sarif
         uses: github/codeql-action/upload-sarif@v1
         with:
-         sarif_file: devskim-results.sarif
-   
-      - name: depecheck_test
-        steps:
+         sarif_file: devskim-results.sarif   
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build project with Maven
