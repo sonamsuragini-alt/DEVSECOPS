@@ -87,4 +87,4 @@ jobs:
           KUBE_NAMESPACE: kube-system
           RELEASE_IMAGE: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.RELEASE_REVISION }}
         with:                                                                                                         
-          args: set image kube-system/coredns-86d9946576-5jvnz app=${{ env.RELEASE_IMAGE }} --record -n $KUBE_NAMESPACE
+          args: set image deployment/coredns-86d9946576-5jvnz app=${{ env.RELEASE_IMAGE }} --record -n $KUBE_NAMESPACE
