@@ -86,18 +86,6 @@ jobs:
           service: tomcat-webserver-service
           cluster: demoapp1
           wait-for-service-stability: true
-      - name: Veracode
-        uses: veracode/veracode-uploadandscan-action@master # Run the uploadandscan action. Inputs are described above.
-        with:
-         filepath: 'Internal POC/'
-         vid: '${{ secrets.VERACODE_API_ID }}'
-         vkey: '${{ secrets.VERACODE_API_KEY }}'
-         createsandbox: 'true'
-         sandboxname: 'ECSDEPLOYMENT'
-         scantimeout: 15
-         exclude: '*.js'
-         include: '*.war'
-         criticality: 'VeryHigh'
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.3.0
         with:
