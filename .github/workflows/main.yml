@@ -2,9 +2,9 @@
 name: Build and Deploy
 on:
   push:
-    branches: [ J2EE ]
+    branches: [ main ]
   pull_request:
-    branches: [ J2EE ]
+    branches: [ main ]
 jobs:
   build:
     name: Build and Test
