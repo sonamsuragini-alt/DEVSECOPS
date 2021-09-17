@@ -59,7 +59,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: us-west-2
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -84,8 +84,8 @@ jobs:
          uses: aws-actions/amazon-ecs-deploy-task-definition@v1
          with:
           task-definition: ${{ steps.task-def.outputs.task-definition }} 
-          service: tomcat-webserver-service
-          cluster: demoapp1
+          service: tomcatservice
+          cluster: clusterwest
           wait-for-service-stability: true
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.3.0
