@@ -62,7 +62,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
+          aws-region: us-east-1
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
@@ -70,13 +70,26 @@ jobs:
         id: build-image
         env:
          ECR_REGISTRY:  ${{ steps.login-ecr.outputs.registry }}
-         ECR_REPOSITORY: demoecr
+         ECR_REPOSITORY: demoapp
          IMAGE_TAG: ${{ github.sha }}
         run: |
          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-      
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+         task-definition: first-run-task-definition.json
+         container-name: tomcat-webserver
+         image: ${{ steps.build-image.outputs.image }}
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: tomcat-webserver-service
+          cluster: demoapp1
+          wait-for-service-stability: true
       - name: Deploy new docker image
         uses: kodermax/kubectl-aws-eks@master
         env:
@@ -86,5 +99,3 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA_BASE_64_ENCODED }} 
           KUBE_NAMESPACE: kube-system
           RELEASE_IMAGE: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.RELEASE_REVISION }}
-        with:                                                                                                         
-          args: set image deployment/coredns-86d9946576-5jvnz app=${{ env.RELEASE_IMAGE }} --record -n $KUBE_NAMESPACE
