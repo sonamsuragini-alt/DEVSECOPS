@@ -103,7 +103,7 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.3.0
         with:
-          target: 'http://54.184.32.145:8080/LoginWebApp-1'
+          target: 'http://54.202.24.60:8080/LoginWebApp-1'
       - name: Deploy  docker image kubernetes
         uses: kodermax/kubectl-aws-eks@master
         env:
