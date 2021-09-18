@@ -97,7 +97,7 @@ jobs:
          uses: aws-actions/amazon-ecs-deploy-task-definition@v1
          with:
           task-definition: ${{ steps.task-def.outputs.task-definition }} 
-          service: demoservice
+          service: LobService
           cluster: clusterwest
           wait-for-service-stability: true
       - name: ZAP Scan
