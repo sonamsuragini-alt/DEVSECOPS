@@ -37,7 +37,7 @@
       "memoryReservation": 2048,
       "volumesFrom": [],
       "stopTimeout": null,
-      "image": "049056461694.dkr.ecr.us-west-2.amazonaws.com/demoecr:a9669809b018bed4a205199fa50827c76068c5d8",
+      "image": "049056461694.dkr.ecr.us-west-2.amazonaws.com/demoecr:91d93319c6d18a228fd8d828260cf643a113ced6",
       "startTimeout": null,
       "firelensConfiguration": null,
       "dependsOn": null,
@@ -64,7 +64,7 @@
     "EC2",
     "FARGATE"
   ],
-  "taskDefinitionArn": "arn:aws:ecs:us-west-2:049056461694:task-definition/first-run-task-definition:1",
+  "taskDefinitionArn": "arn:aws:ecs:us-west-2:049056461694:task-definition/first-run-task-definition:15",
   "family": "first-run-task-definition",
   "requiresAttributes": [
     {
@@ -122,7 +122,7 @@
   ],
   "networkMode": "awsvpc",
   "cpu": "1024",
-  "revision": 1,
+  "revision": 15,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
