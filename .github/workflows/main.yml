@@ -50,6 +50,8 @@ jobs:
           tags: sonamsuragini/app:latest
       - name: Trufflehog Actions Scan
         uses: edplato/trufflehog-actions-scan@v0.9k-beta
+        with:
+         scanArguments: "--regex --entropy=False --max_depth=5 --rules /regexes.json"
       - name: DevSkim
         uses: microsoft/DevSkim-Action@v1
         with:
@@ -58,7 +60,6 @@ jobs:
          should-scan-archives: false
         # The filename for the output.
          output-filename: devskim-results.sarif
-    
       - name: Upload Sarif
         uses: github/codeql-action/upload-sarif@v1
         with:
@@ -98,12 +99,8 @@ jobs:
          with:
           task-definition: ${{ steps.task-def.outputs.task-definition }} 
           service: demoservice
-          cluster: clusterwest
+          cluster:  democluster
           wait-for-service-stability: true
-      - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.3.0
-        with:
-          target: 'http://54.184.25.0:8080/LoginWebApp-1'
       - name: Deploy  docker image kubernetes
         uses: kodermax/kubectl-aws-eks@master
         env:
@@ -113,3 +110,8 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA_BASE_64_ENCODED }} 
           KUBE_NAMESPACE: kube-system
           RELEASE_IMAGE: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.RELEASE_REVISION }}
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.3.0
+        with:
+          target: 'http://54.184.25.0:8080/LoginWebApp-1'
+   
